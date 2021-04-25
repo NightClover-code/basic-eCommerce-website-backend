@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
   res.send('IT WORKS');
 });
 
-app.get('/payment/create', async (req, res) => {
+app.post('/payment/create', async (req, res) => {
   try {
     //getting info from the client
     const { amount, shipping } = req.body;
