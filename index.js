@@ -1,14 +1,13 @@
 //importing dependencies
+require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
-const stripe = require('stripe')(
-  'sk_test_51IjZuuL7ToTGVysx0cm8p89HV8pU7ir17P3g3a3sVbGeDi3G4q8q7g9opJmEUUXFq9aR7ZKRVrZWWCqKJism727Z00Ho0cL6J0'
-);
-const { v4: uuidv4, v4 } = require('uuid');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 //initializing app
 const app = express();
 
-//middleware
+//middlewares
 app.use(
   cors({
     origin: true,
@@ -17,7 +16,6 @@ app.use(
 app.use(express.json());
 
 //routes
-
 app.post('/payments/create', async (req, res) => {
   try {
     //getting info from the client
@@ -43,7 +41,7 @@ app.get('*', (req, res) => {
 });
 
 //listen
-const port = 8282;
+const port = process.env.PORT;
 app.listen(port, () =>
   console.log(`listening at port ${port}`, `visit http://localhost:${port}`)
 );
