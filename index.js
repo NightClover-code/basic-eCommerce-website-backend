@@ -1,26 +1,29 @@
 //importing dependencies
 const cors = require('cors');
 const express = require('express');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(
+  'sk_test_51IjZuuL7ToTGVysx0cm8p89HV8pU7ir17P3g3a3sVbGeDi3G4q8q7g9opJmEUUXFq9aR7ZKRVrZWWCqKJism727Z00Ho0cL6J0'
+);
 const { v4: uuidv4, v4 } = require('uuid');
 //initializing app
 const app = express();
 
 //middleware
+app.use(
+  cors({
+    origin: true,
+  })
+);
 app.use(express.json());
-app.use(cors());
 
 //routes
-app.get('/', (req, res) => {
-  res.send('IT WORKS');
-});
 
-app.post('/payment/create', async (req, res) => {
+app.post('/payments/create', async (req, res) => {
   try {
     //getting info from the client
     const { amount, shipping } = req.body;
     //sending payment intent
-    const paymentIntent = await stripe.paymentIntent.create({
+    const paymentIntent = await stripe.paymentIntents.create({
       shipping,
       amount,
       currency: 'usd',
