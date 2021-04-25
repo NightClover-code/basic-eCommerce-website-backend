@@ -9,3 +9,12 @@ const app = express();
 //middleware
 app.use(express.json());
 app.use(cors());
+
+//routes
+app.get('/', (req, res) => {
+  res.send('It works yep!');
+});
+
+//listen
+const port = 8000;
+app.listen(port, () => console.log(`listenning at port ${port}`));
